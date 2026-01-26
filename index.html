@@ -24,10 +24,10 @@
       .then((text) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(text, 'application/xml')
-        const items = ['id', 'link', 'title', 'content:encoded'];
+        const items = ['guid', 'link', 'title', 'content:encoded'];
         const data = [...doc.getElementsByTagName('item')].map(pick(items))
-        const html = data.map(({ id, link, title, content }) => `
-          <details name="feed" id="${id}">
+        const html = data.map(({ guid, link, title, content }) => `
+          <details name="feed" id="${guid}">
             <summary>${title}</summary>
             <p><a href="${link}" target="_blank">Visit</a><br /><br />${content}</p>
           </details>
