@@ -1,0 +1,52 @@
+:root {
+  --grey: #777777;
+  --white: #ffffff;
+  --black: #000000;
+  --border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --white: #000a16;
+    --black: #ffffff;
+    --border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
+
+html {
+  height: 100%;
+  color: var(--black);
+  background: var(--white);
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  user-select: none;
+  box-sizing: border-box;
+  font-family: monospace;
+  flex-direction: column;
+}
+
+details {
+  border-radius: 4px;
+  padding: 0.5em 0.5em 0;
+  border: 1px solid var(--border);
+}
+
+summary {
+  padding: 0.5em;
+  font-weight: bold;
+  margin: -0.5em -0.5em 0 0;
+}
+
+details[open] {
+  padding: 0.5em;
+}
+
+details[open] summary {
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid var(--grey);
+}

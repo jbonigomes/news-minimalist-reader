@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>News Minimalist Reader</title>
+  <meta charset="utf-8" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="News Minimalist Reader" />
+  <meta name="theme-color" content="#000A16" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="icon" href="favicon.png" />
+  <link rel="stylesheet" href="index.css" />
+  <link rel="apple-touch-icon" href="appicon.png" />
+</head>
+<body>
+  <script>
+    const pick = (keys) => (item) => keys.reduce((acc, cur) => ({
+      ...acc,
+      [cur.replace(':encoded', '')]: item.getElementsByTagName(cur)[0].textContent,
+    }), {})
+
+    fetch('https://www.newsminimalist.com/rss/0dfd299c-e672-47dc-972a-9cdacbe9e3d6/0ec434356e68c0426d161feaa4fba0ff')
+      .then((response) => response.text())
+      .then((text) => {
+        const items = ['id', 'link', 'title', 'content:encoded'];
+        const data = [...text.getElementsByTagName('item')].map(pick(items))
+        const html = data.map(({ id, link, title, content }) => `
+          <details name="feed" id="${id}">
+            <summary>${title}</summary>
+            <p><a href="${link}" target="_blank">Visit</a><br /><br />${content}</p>
+          </details>
+        `).join('')
+
+        document.innerHtml = html
+      })
+  </script>
+</body>
+</html>
