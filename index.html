@@ -22,8 +22,10 @@
     fetch('https://nameless-bread-889b.jbonigomes.workers.dev/')
       .then((response) => response.text())
       .then((text) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, 'application/xml')
         const items = ['id', 'link', 'title', 'content:encoded'];
-        const data = [...text.getElementsByTagName('item')].map(pick(items))
+        const data = [...doc.getElementsByTagName('item')].map(pick(items))
         const html = data.map(({ id, link, title, content }) => `
           <details name="feed" id="${id}">
             <summary>${title}</summary>
