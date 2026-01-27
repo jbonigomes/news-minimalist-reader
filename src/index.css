@@ -1,15 +1,15 @@
 :root {
-  --grey: #777777;
+  --blue: #4444bb;
   --white: #ffffff;
   --black: #000000;
-  --border: 1px solid rgba(0, 0, 0, 0.1);
+  --grey: rgba(0, 0, 0, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --white: #000a16;
     --black: #ffffff;
-    --border: 1px solid rgba(255, 255, 255, 0.2);
+    --grey: rgba(255, 255, 255, 0.2);
   }
 }
 
@@ -25,21 +25,34 @@ body {
   padding: 20px;
   display: flex;
   user-select: none;
+  font-family: verdana;
   box-sizing: border-box;
-  font-family: monospace;
   flex-direction: column;
+}
+
+a {
+  margin-top: 1.2em;
+  color: var(--blue);
+  display: inline-block;
 }
 
 details {
   border-radius: 4px;
   padding: 0.5em 0.5em 0;
-  border: 1px solid var(--border);
 }
 
 summary {
-  padding: 0.5em;
   font-weight: bold;
+  position: relative;
   margin: -0.5em -0.5em 0 0;
+  padding: 0.5em 1.5em 0.5em 0.5em;
+}
+
+summary.unread:after {
+  right: 0;
+  content: '•';
+  position: absolute;
+  top: calc(50% - 10px);
 }
 
 details[open] {
