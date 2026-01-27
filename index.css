@@ -36,11 +36,6 @@ a {
   display: inline-block;
 }
 
-p {
-  margin: -0.5em -0.5em 0 0;
-  padding: 0.5em 1.5em 0.5em 0.5em;
-}
-
 details {
   border-radius: 4px;
   padding: 0.5em 0.5em 0 0;
@@ -55,7 +50,8 @@ summary {
 
 summary::marker,
 summary::-webkit-details-marker {
-  display: none;
+  content: "▶\uFE0E";
+  font-size: 0.8em;
 }
 
 summary.unread:after {
@@ -68,4 +64,8 @@ summary.unread:after {
 details[open] summary {
   margin-bottom: 0.5em;
   border-bottom: 1px solid var(--grey);
+}
+
+details[open] summary::marker {
+  content: '▼';
 }
