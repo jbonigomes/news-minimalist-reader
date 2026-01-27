@@ -49,7 +49,7 @@ summary {
 }
 
 summary::marker {
-  content: '▶';
+  content: '→';
   font-size: 0.8em;
 }
 
@@ -66,5 +66,5 @@ details[open] summary {
 }
 
 details[open] summary::marker {
-  content: '▼';
+  content: '↓';
 }
