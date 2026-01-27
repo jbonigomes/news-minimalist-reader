@@ -2,7 +2,7 @@
   --blue: #4444bb;
   --white: #ffffff;
   --black: #000000;
-  --grey: rgba(0, 0, 0, 0.1);
+  --grey: rgba(0, 0, 0, 0.2);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -38,7 +38,7 @@ a {
 
 details {
   border-radius: 4px;
-  padding: 0.5em 0.5em 0;
+  padding: 0.5em 0.5em 0 0;
 }
 
 summary {
@@ -48,6 +48,11 @@ summary {
   padding: 0.5em 1.5em 0.5em 0.5em;
 }
 
+summary::marker {
+  content: '▶';
+  font-size: 0.8em;
+}
+
 summary.unread:after {
   right: 0;
   content: '•';
@@ -55,11 +60,11 @@ summary.unread:after {
   top: calc(50% - 10px);
 }
 
-details[open] {
-  padding: 0.5em;
-}
-
 details[open] summary {
   margin-bottom: 0.5em;
   border-bottom: 1px solid var(--grey);
+}
+
+details[open] summary::marker {
+  content: '▼';
 }
