@@ -17,6 +17,11 @@
     const parser = new DOMParser()
     const getText = (item, tag) => item.getElementsByTagName(tag)[0].textContent
 
+    const onClick = (guid) => ({ target }) => {
+      localStorage.setItem(guid, 'x')
+      target.getElementsByTagName('summary')[0].classList.remove('unread')
+    }
+
     fetch('https://nameless-bread-889b.jbonigomes.workers.dev/')
       .then((response) => response.text())
       .then((text) => {
@@ -24,9 +29,13 @@
         const items = doc.getElementsByTagName('item')
 
         document.body.innerHTML = [...items].map((item) => `
-          <details name="feed" id="${getText(item, 'guid')}">
-            <summary>${getText(item, 'title')}</summary>
-            <p>${getText(item, 'content')}</p>
+          <details name="feed" ontoggle="onClick('${getText(item, 'guid')}')(event)">
+            <summary class="${localStorage.getItem(`${getText(item, 'guid')}`) ? '' : 'unread'}">
+              ${getText(item, 'title')}
+            </summary>
+            <p>
+              ${getText(item, 'content:encoded')}
+            </p>
           </details>
         `).join('')
       })
