@@ -14,26 +14,21 @@
 </head>
 <body>
   <script>
-    const pick = (keys) => (item) => keys.reduce((acc, cur) => ({
-      ...acc,
-      [cur.replace(':encoded', '')]: item.getElementsByTagName(cur)[0].textContent,
-    }), {})
+    const parser = new DOMParser()
+    const getText = (item, tag) => item.getElementsByTagName(tag)[0].textContent
 
     fetch('https://nameless-bread-889b.jbonigomes.workers.dev/')
       .then((response) => response.text())
       .then((text) => {
-        const parser = new DOMParser();
         const doc = parser.parseFromString(text, 'application/xml')
-        const items = ['guid', 'title', 'content:encoded'];
-        const data = [...doc.getElementsByTagName('item')].map(pick(items))
-        const html = data.map(({ guid, link, title, content }) => `
-          <details name="feed" id="${guid}">
-            <summary>${title}</summary>
-            <p>${content}</p>
+        const items = doc.getElementsByTagName('item')
+
+        document.body.innerHTML = [...items].map((item) => `
+          <details name="feed" id="${getText(item, 'guid')}">
+            <summary>${getText(item, 'title')}</summary>
+            <p>${getText(item, 'content')}</p>
           </details>
         `).join('')
-
-        document.body.innerHTML = html
       })
   </script>
 </body>
