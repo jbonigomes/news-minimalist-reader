@@ -58,18 +58,19 @@ details {
     &::marker,
     &::-webkit-details-marker {
       content: '';
+      font-size: 0;
       display: none;
     }
 
     &:after {
-      right: 0;
+      right: -1.5em;
       content: '›';
       position: absolute;
       top: calc(50% - 10px);
     }
 
     &.unread:before {
-      left: 0;
+      left: -1.5em;
       content: '•';
       position: absolute;
       top: calc(50% - 10px);
