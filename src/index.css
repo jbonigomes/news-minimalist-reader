@@ -36,36 +36,43 @@ a {
   display: inline-block;
 }
 
-p {
-  margin: -0.5em -0.5em 0 0;
-  padding: 0.5em 1.5em 0.5em 0.5em;
-}
-
 details {
-  border-radius: 4px;
-  padding: 0.5em 0.5em 0 0;
-}
+  padding-top: 0.5em;
 
-summary {
-  font-weight: bold;
-  position: relative;
-  margin: -0.5em -0.5em 0 0;
-  padding: 0.5em 1.5em 0.5em 0.5em;
-}
+  p {
+    margin-inline: 1.5em;
+  }
 
-summary::marker,
-summary::-webkit-details-marker {
-  display: none;
-}
+  &[open] summary {
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid var(--grey);
+  }
 
-summary.unread:after {
-  right: 0;
-  content: '•';
-  position: absolute;
-  top: calc(50% - 10px);
-}
 
-details[open] summary {
-  margin-bottom: 0.5em;
-  border-bottom: 1px solid var(--grey);
+  summary {
+    font-weight: bold;
+    position: relative;
+    margin-inline: 1.5em;
+    padding-block: 0.5em;
+
+    &::marker,
+    &::-webkit-details-marker {
+      content: '';
+      display: none;
+    }
+
+    &:after {
+      right: 0;
+      content: '›';
+      position: absolute;
+      top: calc(50% - 10px);
+    }
+
+    &.unread:before {
+      left: 0;
+      content: '•';
+      position: absolute;
+      top: calc(50% - 10px);
+    }
+  }
 }
