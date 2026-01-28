@@ -22,16 +22,16 @@ html {
 body {
   margin: 0;
   height: 100%;
-  padding: 20px;
   display: flex;
   user-select: none;
   font-family: verdana;
+  padding: 1.5em 0.5em;
   box-sizing: border-box;
   flex-direction: column;
 }
 
 a {
-  margin-top: 1.2em;
+  margin-top: 1.5em;
   color: var(--blue);
   display: inline-block;
 }
@@ -40,7 +40,7 @@ details {
   padding-top: 0.5em;
 
   p {
-    margin-inline: 1.5em;
+    margin-inline: 0.5em;
   }
 
   &[open] summary {
@@ -52,7 +52,7 @@ details {
   summary {
     font-weight: bold;
     position: relative;
-    margin-inline: 1.5em;
+    margin-inline: 0.5em;
     padding-block: 0.5em;
 
     &::marker,
@@ -63,14 +63,14 @@ details {
     }
 
     &:after {
-      right: -1.5em;
+      right: -0.5em;
       content: '›';
       position: absolute;
       top: calc(50% - 10px);
     }
 
     &.unread:before {
-      left: -1.5em;
+      left: -0.5em;
       content: '•';
       position: absolute;
       top: calc(50% - 10px);
