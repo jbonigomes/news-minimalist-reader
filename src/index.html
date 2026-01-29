@@ -14,30 +14,61 @@
 </head>
 <body>
   <script>
-    const parser = new DOMParser()
+    const KEY = 'news-minimalist'
+
     const getText = (item, tag) => item.getElementsByTagName(tag)[0].textContent
 
-    const onClick = (guid) => ({ target }) => {
-      localStorage.setItem(guid, 'x')
+    const onClick = (id) => ({ target }) => {
+      const allItems = JSON.parse(localStorage.getItem(KEY))
+
+      localStorage.setItem(
+        KEY,
+        JSON.stringify({ ...allItems, [id]: { ...allItems[id], read: true } })
+      )
+
       target.getElementsByTagName('summary')[0].classList.remove('unread')
+    }
+
+    const render = (items) => {
+      document.body.innerHTML = items.map((item) => `
+        <details name="feed" ontoggle="onClick('${item.id}')(event)">
+          <summary class="${item.read ? '' : 'unread'}">${item.title}</summary>
+          <p>${item.content}</p>
+        </details>
+      `).join('')
     }
 
     fetch('https://nameless-bread-889b.jbonigomes.workers.dev/')
       .then((response) => response.text())
       .then((text) => {
-        const doc = parser.parseFromString(text, 'application/xml')
-        const items = doc.getElementsByTagName('item')
+        const parser = new DOMParser()
+        const xmlDoc = parser.parseFromString(text, 'application/xml')
 
-        document.body.innerHTML = [...items].map((item) => `
-          <details name="feed" ontoggle="onClick('${getText(item, 'guid')}')(event)">
-            <summary class="${localStorage.getItem(`${getText(item, 'guid')}`) ? '' : 'unread'}">
-              ${getText(item, 'title')}
-            </summary>
-            <p>
-              ${getText(item, 'content:encoded')}
-            </p>
-          </details>
-        `).join('')
+        const localItems = JSON.parse(localStorage.getItem(KEY) ?? '{}')
+        const fetchedItems = [...xmlDoc.getElementsByTagName('item')]
+          .filter((item) => !localItems[getText(item, 'guid')])
+          .reduce((acc, cur) => ({
+            ...acc,
+            [getText(cur, 'guid')]: {
+              read: false,
+              title: getText(cur, 'title'),
+              content: getText(cur, 'content:encoded'),
+              date: (new Date(getText(cur, 'pubDate'))).toJSON(),
+            },
+          }), {})
+
+        const allItems = Object
+          .entries({ ...fetchedItems, ...localItems })
+          .map(([id, item]) => ({ id, ...item }))
+          .toSorted((a, b) => a.date.localeCompare(b.date))
+          .slice(0, 100)
+
+        const read = allItems.filter(({ read }) => read)
+        const unread = allItems.filter(({ read }) => !read)
+
+        localStorage.setItem(KEY, JSON.stringify(allItems.reduce((acc, cur) => ({ ...acc, [cur.id]: cur }), {})))
+
+        render([...read, ...unread])
       })
   </script>
 </body>
