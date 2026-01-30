@@ -21,11 +21,6 @@ html, body {
 }
 
 body {
-  font-family: verdana;
-  user-select: none;
-}
-
-body {
   overflow: hidden;
   user-select: none;
   font-family: verdana;
@@ -71,10 +66,9 @@ details {
   }
 
   summary {
+    padding: 0.5em;
     font-weight: bold;
     position: relative;
-    margin-inline: 0.5em;
-    padding-block: 0.5em;
 
     &::marker,
     &::-webkit-details-marker {

@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "deploy": "gh-pages -d src"
+    "deploy": "gh-pages -d src",
+    "serve": "serve src"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "gh-pages": "6.3.0"
+    "gh-pages": "6.3.0",
+    "serve": "14.2.5"
   }
 }
