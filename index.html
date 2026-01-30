@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>News Minimalist Reader</title>
+  <title>News Minimalist</title>
   <meta charset="utf-8" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="News Minimalist Reader" />
   <meta name="theme-color" content="#000A16" media="(prefers-color-scheme: dark)" />
   <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
   <link rel="icon" href="favicon.png" />
   <link rel="stylesheet" href="index.css" />
   <link rel="apple-touch-icon" href="appicon.png" />
 </head>
 <body>
+  <main>
+    <section></section>
+  </main>
   <script>
     const KEY = 'news-minimalist'
 
     const getText = (item, tag) => item.getElementsByTagName(tag)[0].textContent
 
-    const onClick = (id) => ({ target }) => {
+    const onClick = ({ target }) => {
       const allItems = JSON.parse(localStorage.getItem(KEY))
 
       localStorage.setItem(
         KEY,
-        JSON.stringify({ ...allItems, [id]: { ...allItems[id], read: true } })
+        JSON.stringify({
+          ...allItems,
+          [target.id]: {
+            ...allItems[target.id],
+            read: true,
+          }
+        })
       )
 
       target.getElementsByTagName('summary')[0].classList.remove('unread')
     }
 
     const render = (items) => {
-      document.body.innerHTML = items.map((item) => `
-        <header></header>
-        <details name="feed" ontoggle="onClick('${item.id}')(event)">
+      document.getElementsByTagName('section')[0].innerHTML = items.map((item) => `
+        <details name="feed" id="${item.id}" ontoggle="onClick(event)">
           <summary class="${item.read ? '' : 'unread'}">${item.title}</summary>
           <p>
             <i>${item.date.split('T')[0].split('-').reverse().join('/')}</i>
