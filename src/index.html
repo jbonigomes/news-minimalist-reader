@@ -5,9 +5,32 @@
   <meta charset="utf-8" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="News Minimalist Reader" />
-  <meta name="theme-color" content="#000A16" media="(prefers-color-scheme: dark)" />
-  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+  <meta
+    content="#000a16"
+    name="theme-color"
+    media="(prefers-color-scheme: dark)"
+  />
+  <meta
+    content="#ffffff"
+    name="theme-color"
+    media="(prefers-color-scheme: light)"
+  />
+  <meta
+    name="viewport"
+    content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width, viewport-fit=cover"
+  />
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="
+      base-uri 'none';
+      script-src 'self';
+      object-src 'none';
+      default-src 'self';
+      img-src 'self' data: https:;
+      style-src 'self' 'unsafe-inline';
+      connect-src 'self' https://nameless-bread-889b.jbonigomes.workers.dev;
+    "
+  />
   <link rel="icon" href="favicon.png" />
   <link rel="stylesheet" href="index.css" />
   <link rel="apple-touch-icon" href="appicon.png" />
@@ -16,6 +39,6 @@
   <main>
     <section></section>
   </main>
-  <script src="index.js"></script>
+  <script src="index.js" defer></script>
 </body>
 </html>

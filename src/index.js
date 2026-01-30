@@ -1,23 +1,23 @@
 const KEY = 'news-minimalist'
-
+const app = document.querySelector('section')
 const getText = (item, tag) => item.getElementsByTagName(tag)[0].textContent
 
-const onToggle = ({ currentTarget }) => {
-  const { id, open } = currentTarget
+app.addEventListener('toggle', ({ target }) => {
+  const { id, open, tagName } = target
 
-  if (open) {
+  if (open && tagName === 'DETAILS') {
     const data = JSON
       .parse(localStorage.getItem(KEY))
       .map((item) => ({ ...item, read: item.id === id ? true : item.read }))
 
     localStorage.setItem(KEY, JSON.stringify(data))
-    currentTarget.querySelector('summary').classList.remove('unread')
+    target.querySelector('summary').classList.remove('unread')
   }
-}
+}, true)
 
 const render = (items) => {
-  document.querySelector('section').innerHTML = items.map((item) => `
-    <details name="feed" id="${item.id}" ontoggle="onToggle(event)">
+  app.innerHTML = items.map((item) => `
+    <details name="feed" id="${item.id}">
       <summary class="${item.read ? '' : 'unread'}">${item.title}</summary>
       <p>
         <i>${item.date.split('T')[0].split('-').reverse().join('/')}</i>
