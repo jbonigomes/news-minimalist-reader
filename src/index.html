@@ -34,6 +34,7 @@
 
     const render = (items) => {
       document.body.innerHTML = items.map((item) => `
+        <header></header>
         <details name="feed" ontoggle="onClick('${item.id}')(event)">
           <summary class="${item.read ? '' : 'unread'}">${item.title}</summary>
           <p>
