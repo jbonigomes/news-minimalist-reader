@@ -24,10 +24,12 @@ body {
   height: 100%;
   display: flex;
   user-select: none;
+  padding-inline: 1em;
   font-family: verdana;
-  padding: 1.5em 1em;
   box-sizing: border-box;
   flex-direction: column;
+  padding-top: env(safe-area-inset-top, 0);
+  padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
 a {
