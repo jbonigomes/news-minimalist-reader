@@ -68,7 +68,7 @@
 
         localStorage.setItem(KEY, JSON.stringify(allItems.reduce((acc, cur) => ({ ...acc, [cur.id]: cur }), {})))
 
-        render([...read, ...unread])
+        render([...unread, ...read])
       })
   </script>
 </body>
