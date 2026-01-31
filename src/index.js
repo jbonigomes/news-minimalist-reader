@@ -1,6 +1,48 @@
 const KEY = 'news-minimalist'
 const app = document.querySelector('section')
 const getText = (item, tag) => item.getElementsByTagName(tag)[0].textContent
+const sanitise = (html) => {
+  const doc = new DOMParser().parseFromString(html, 'text/html')
+
+  const isSafeHref = (href) => {
+    if (href) {
+      const v = href.trim().toLowerCase()
+
+      if (v.startsWith('javascript:') || v.startsWith('vbscript:')) {
+        return false
+      }
+
+      try {
+        const u = new URL(href, location.origin)
+        return ['http:', 'https:', 'mailto:'].includes(u.protocol)
+      } catch {
+        return false
+      }
+    }
+
+    return false
+  }
+
+  doc.body.querySelectorAll('*').forEach((el) => {
+    if (el.tagName === 'A') {
+      if (!isSafeHref(el.getAttribute('href'))) {
+        el.removeAttribute('href')
+      }
+
+      [...el.attributes].forEach(({ name }) => {
+        if (name !== 'href') {
+          el.removeAttribute(name)
+        }
+      })
+    }
+
+    if (!['BR', 'A'].includes(el.tagName)) {
+      el.replaceWith(...el.childNodes)
+    }
+  })
+
+  return doc.body.innerHTML
+}
 
 app.addEventListener('toggle', ({ target }) => {
   const { id, open, tagName } = target
@@ -21,7 +63,7 @@ const render = (items) => {
       <summary class="${item.read ? '' : 'unread'}">${item.title}</summary>
       <p>
         <i>${item.date.split('T')[0].split('-').reverse().join('/')}</i>
-        ${item.content}
+        ${sanitise(item.content)}
       </p>
     </details>
   `).join('')
